@@ -7,7 +7,7 @@
 ## Status: prototype
 #### 2014.2.14
 - `vgs-spu` を使って矩形波を鳴らす
-- key-on/key-off をコマンド(on/off)で実装できるようにする
+- key-on/key-off をコマンド(on/off)で実行できるようにする
 - エンベロープを実装
   - 従来のVGSはAT/RTのみ
   - AT/DT/ST/RTを実装してみる
