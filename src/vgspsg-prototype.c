@@ -52,28 +52,24 @@ void cb(void* buffer, size_t size)
                 m = n / _ctx->ch[i].duty;
                 if (_ctx->hz % n < m) {
                     if (1 == _ctx->ch[i].keyon) {
-                        switch (_ctx->ch[i].ef) {
-                            case 0:
-                                if (0 == _ctx->ch[i].ec % _ctx->ch[i].ai) {
-                                    _ctx->ch[i].pw++;
-                                    if (255 <= _ctx->ch[i].pw) {
-                                        _ctx->ch[i].pw = 255;
-                                        _ctx->ch[i].ec = 0;
-                                        _ctx->ch[i].ef++;
-                                        break;
-                                    }
-                                }
-                                break;
-                            case 1:
-                                if (_ctx->ch[i].pw <= _ctx->ch[i].dl) {
-                                    _ctx->ch[i].ef++;
+                        if (0 == _ctx->ch[i].ef) {
+                            if (0 == _ctx->ch[i].ec % _ctx->ch[i].ai) {
+                                _ctx->ch[i].pw++;
+                                if (255 <= _ctx->ch[i].pw) {
+                                    _ctx->ch[i].pw = 255;
                                     _ctx->ch[i].ec = 0;
-                                    break;
+                                    _ctx->ch[i].ef++;
                                 }
+                            }
+                        } else if (1 == _ctx->ch[i].ef) {
+                            if (_ctx->ch[i].pw <= _ctx->ch[i].dl) {
+                                _ctx->ch[i].ef++;
+                                _ctx->ch[i].ec = 0;
+                            } else {
                                 if (0 == ++_ctx->ch[i].ec % _ctx->ch[i].di) {
                                     _ctx->ch[i].pw--;
                                 }
-                                break;
+                            }
                         }
                         ww = (_ctx->ch[i].vel * _ctx->ch[i].pw) >> 8;
                         w += ww;
